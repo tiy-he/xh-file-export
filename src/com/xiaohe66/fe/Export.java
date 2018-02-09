@@ -104,9 +104,10 @@ public class Export {
             if(javaFileSet.size() > 0){
                 //编译管理器
                 CompilerManager compilerManager = CompilerManager.getInstance(project);
-//                compilerManager.compile(javaFileSet.toArray(new VirtualFile[javaFileSet.size()]), (b, i, i1, compileContext) -> {
+                //导出java前，先编译
+                compilerManager.compile(javaFileSet.toArray(new VirtualFile[javaFileSet.size()]), (b, i, i1, compileContext) -> {
                         exportClass(javaFileSet,project,exportRootPath);
-//                });
+                });
             }
             exportFile(notJavaFileSet,project,exportRootPath);
         }
