@@ -1,6 +1,7 @@
 package com.xiaohe66.fe;
 
 
+import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -114,6 +115,14 @@ public class XhUtils {
 
         }
         file.delete();
+    }
+
+    public static void openDirectory(String path){
+        try {
+            Desktop.getDesktop().open(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getCurrentDateStr(){

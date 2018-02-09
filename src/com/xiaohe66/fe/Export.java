@@ -107,23 +107,23 @@ public class Export {
                 //导出java前，先编译
                 compilerManager.compile(javaFileSet.toArray(new VirtualFile[javaFileSet.size()]), (b, i, i1, compileContext) -> {
                         exportClass(javaFileSet,project,exportRootPath);
+                        exportFile(notJavaFileSet,project,exportRootPath);
+                        XhUtils.openDirectory(projectPath+DEFAULT_EXPORT_DIRECTORY_PATH);
                 });
+            }else{
+                exportFile(notJavaFileSet,project,exportRootPath);
+                XhUtils.openDirectory(projectPath+DEFAULT_EXPORT_DIRECTORY_PATH);
             }
-            exportFile(notJavaFileSet,project,exportRootPath);
         }
         //导出源
         else{
             //todo:导出java和导出jsp等这些文件不能共用一个方法，因为他们的目录不一样，需要另外识别
             Set<VirtualFile> set = new HashSet<>(Arrays.asList(files));
             exportFile(set,project,exportRootPath);
+            //打开导出后的目录
+            XhUtils.openDirectory(projectPath+DEFAULT_EXPORT_DIRECTORY_PATH);
         }
 
-        //打开导出后的目录
-        try {
-            Desktop.getDesktop().open(new File(project.getBasePath()+DEFAULT_EXPORT_DIRECTORY_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
