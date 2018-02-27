@@ -144,7 +144,7 @@ public class Export {
         for (VirtualFile javaFile : javaFileSet) {
             //忽略目录
             if (javaFile.isDirectory()) {
-                return;
+                continue;
             }
 
             //获取当前文件所在的module
@@ -211,7 +211,7 @@ public class Export {
         for (VirtualFile notJavaFile : fileSet) {
             //忽略目录
             if (notJavaFile.isDirectory()) {
-                return;
+                continue;
             }
             //获取当前文件所在的module
             Module module = projectRootManager.getFileIndex().getModuleForFile(notJavaFile);
