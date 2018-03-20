@@ -14,9 +14,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +23,6 @@ import java.util.Set;
 /**
  *
  * 导出
- * todo:export需要增加日期以区分不同时间导出的
  *
  * @author xh
  * @date 18-01-31 031
@@ -35,7 +32,12 @@ public class Export {
     private static final String JAVA_FILE_EXTENSION = "java";
     private static final String CLASS_FILE_EXTENSION = "class";
 
-    private static final String DEFAULT_EXPORT_DIRECTORY_PATH = "/export";
+    /**
+     * todo:需要使用代码获取编译输出路径
+     * 这个目录是设计为项目的默认输出路径，而不同项目的输出路径可能是不同的，
+     * 但是这里是写死为“/out”，因此需要使用代码获取项目的编译输出路径
+     */
+    private static final String DEFAULT_EXPORT_DIRECTORY_PATH = "/out/export";
 
     private static final String DEFAULT_WAR_CLASS_RELATIVE_PATH = "/WEB-INF/classes";
 
@@ -73,15 +75,20 @@ public class Export {
 
         String exportRootPath = projectPath + DEFAULT_EXPORT_DIRECTORY_PATH + datePath;
 
+        /*
+        * 如果当天导出过文件，且目录不为空，则让用户选择是否删除旧文件
+        * */
         File exportRootFile = new File(exportRootPath);
-        if(exportRootFile.exists()){
+        if(exportRootFile.exists()&&exportRootFile.listFiles().length>0){
             int result = Messages.showOkCancelDialog(EXPORT_DIRECTORY_PATH_EXISTS_MESSAGE,
                     EXPORT_DIRECTORY_PATH_EXISTS_TITLE,Messages.getQuestionIcon());
 
             //0：确定，1：取消
             if(result == 0){
+                //删除旧文件
                 XhUtils.deleteFile(exportRootFile);
             }
+            //若用户点击了取消，则不会删除旧文件，直接将内容覆盖到目录（存在同名文件时删除旧文件，见xhUtils.java 39行）
         }
 
         //导出war
@@ -100,7 +107,7 @@ public class Export {
                     notJavaFileSet.add(file);
                 }
             }
-
+            //有java文件时，需要先编译
             if(javaFileSet.size() > 0){
                 //编译管理器
                 CompilerManager compilerManager = CompilerManager.getInstance(project);

@@ -6,7 +6,7 @@
     <name>file export</name>
 
     <!--版本-->
-    <version>2.1</version>
+    <version>2.2</version>
 
     <!--插件的供应商-->
     <vendor email="tiy_he@foxmail.com" url="http://www.xiaohe66.com">小何</vendor>
@@ -15,7 +15,7 @@
     <description>将你想要的文件导出到项目目录下的export文件夹中</description>
 
     <!--描述插件最新版本的变化-->
-    <change-notes>2.1:导出文件夹时，丢失某些文件的导出</change-notes>
+    <change-notes>2.1:导出文件夹时，丢失某些文件的导出\n2.2:将导出的文件的根目录由/export改为/out/export\n当天导出过文件时，若存在的目录中没有文件，则不会弹出对话框</change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="145.0"/>
