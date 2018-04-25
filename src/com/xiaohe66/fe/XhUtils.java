@@ -126,6 +126,6 @@ public class XhUtils {
     }
 
     public static String getCurrentDateStr(){
-        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        return new SimpleDateFormat("yyyy.MM.dd").format(new Date());
     }
 }
